@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Oct 14 14:01:26 2020
+
+@author: User
+"""
+
+Exercise 3:
+
+1) Create zero padding around image and make sure image is on the complete top left side of the padding
+
+2) Apply Fast Fourier Transform (FFT) to obtain the Fourier coefficients F
+
+3) Shift the low frequency components to the center
+
+4) Generate filter function H. It depends on which filter you will be using, so generate accordingly
+
+5) Multiply filter function H with Fourier coefficients F to obtain the filtered Fourier coefficients G
+
+6) Transform the filtered Fourier coefficients back to the spatial domain
+
+7) Remove imaginary components and values exceeded the range of 0 to 255
