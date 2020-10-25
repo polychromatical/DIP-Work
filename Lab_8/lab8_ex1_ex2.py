@@ -25,7 +25,7 @@ def calcLength(start, end):
     lgx = end[0] - start[0]
     lgy = end[1] - start[1]
     
-    hypo = np.sqrt(np.power(lgx, 2)) + np.power(lgy, 2)
+    hypo = np.sqrt(np.power(lgx, 2) + np.power(lgy, 2))
     return hypo
 
 pt1 = calcLength([128, 128], [103, 153])
@@ -39,15 +39,30 @@ pt8 = calcLength([128, 128], [153, 153])
 
 [nrow, ncol] = f.shape
 
-br1 = filter.brfilter(nrow, ncol, "ideal", pt1, 10)
+br1 = brfilter(nrow, ncol, "ideal", pt1, 2)
+br2 = brfilter(nrow, ncol, "ideal", pt2, 2)
+
+
+# Applying filter to image
+
+img1 = br1 * br2 * Fs
+
+spectrum_g = np.log(1+np.abs(img1))
+
+img1s = np.fft.ifftshift(img1)
+img1b = np.fft.ifft2(img1s)
+
+g = img1b.real
+g[g < 0] = 0
+g[g > 255] = 255
 
 # Display
 
 pt.figure()
-pt.subplot(2,2,1)
+pt.subplot(1,2,1)
 pt.imshow(f, cmap="gray")
 pt.title("Before")
 
-pt.subplot(2,2,2)
-pt.imshow(spectrum_h, cmap="gray")
-pt.title("Spectrum")
+pt.subplot(1,2,2)
+pt.imshow(g, cmap="gray")
+pt.title("Final")
